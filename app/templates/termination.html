@@ -1,0 +1,141 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employment Separation Notice</title>
+
+    <style>
+        body{
+            margin:0;
+            padding:30px;
+            background:#f4f6f9;
+            font-family:Arial,Helvetica,sans-serif;
+        }
+
+        .container{
+            max-width:650px;
+            margin:auto;
+            background:#ffffff;
+            border-radius:8px;
+            overflow:hidden;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .header{
+            background:#c62828;
+            color:white;
+            text-align:center;
+            padding:25px;
+        }
+
+        .content{
+            padding:35px;
+            color:#333;
+            line-height:1.8;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin:25px 0;
+        }
+
+        td{
+            padding:12px;
+            border:1px solid #ddd;
+        }
+
+        td:first-child{
+            font-weight:bold;
+            width:35%;
+            background:#f8f8f8;
+        }
+
+        .reason-box{
+            margin-top:20px;
+            padding:18px;
+            background:#fff8e1;
+            border-left:5px solid #ff9800;
+        }
+
+        .footer{
+            background:#eeeeee;
+            text-align:center;
+            padding:18px;
+            font-size:13px;
+            color:#666;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Employment Separation Notice</h2>
+    </div>
+
+    <div class="content">
+
+        <p>Dear <strong>{{ employee_name }}</strong>,</p>
+
+        <p>
+            This email serves as formal notification regarding your employment status.
+            After careful review, the company has decided to proceed with the following action.
+        </p>
+
+        <table>
+
+            <tr>
+                <td>Employee Name</td>
+                <td>{{ employee_name }}</td>
+            </tr>
+
+            <tr>
+                <td>Employee ID</td>
+                <td>{{ employee_id }}</td>
+            </tr>
+
+            <tr>
+                <td>Separation Type</td>
+                <td>{{ termination_type }}</td>
+            </tr>
+
+        </table>
+
+        <div class="reason-box">
+            <strong>Reason</strong>
+            <p>{{ reason }}</p>
+        </div>
+
+        <p>
+            Please contact the Human Resources department if you require any clarification
+            regarding your exit process, final settlement, or company asset return.
+        </p>
+
+        <p>
+            We thank you for your contributions and wish you success in your future endeavors.
+        </p>
+
+        <br>
+
+        <p>
+            Regards,<br>
+            <strong>Human Resources</strong><br>
+            {{ company_name }}
+        </p>
+
+    </div>
+
+    <div class="footer">
+        © {{ current_year }} {{ company_name }}. All Rights Reserved.
+    </div>
+
+</div>
+
+</body>
+</html>
+```

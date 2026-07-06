@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ company_name }} Newsletter</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0b0c10; color: #c5c6c7; margin: 0; padding: 20px; }
+        .card { max-width: 600px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 12px; }
+        h1 { color: #66fcf1; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 12px; margin-top: 0; }
+        p { line-height: 1.6; font-size: 15px; }
+        .highlight { color: #45f3ff; font-weight: bold; }
+        .footer { border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 35px; padding-top: 15px; font-size: 11px; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>{{ company_name }} Monthly Newsletter</h1>
+        <p>Hello,</p>
+        <p>Welcome to our monthly updates. This month, we have some exciting announcements: <span class="highlight">{{ main_topic }}</span>.</p>
+        <p>{{ content_paragraph }}</p>
+        <p>Best regards,<br><strong>{{ sender_name }}</strong></p>
+        <div class="footer">
+            To unsubscribe from future updates, please update your newsletter settings on our main profile portal.
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Account - {{ company }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f6f9fc;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2f5;
+        }
+        .header {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .content {
+            padding: 40px 30px;
+            color: #334155;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .otp-container {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            display: inline-block;
+            letter-spacing: 6px;
+            font-size: 32px;
+            font-weight: 800;
+            color: #0f172a;
+            border: 1px dashed #cbd5e1;
+        }
+        .warning {
+            font-size: 13px;
+            color: #ef4444;
+            margin-top: 20px;
+            background-color: #fef2f2;
+            padding: 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            border-top: 1px solid #eef2f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Security Verification</h1>
+        </div>
+        <div class="content">
+            <h2 style="color: #0f172a; margin-top: 0;">Verify Your Request</h2>
+            <p>Hello {{ name }},</p>
+            <p>A sign-in or transaction request was initiated on your account for <strong>{{ company }}</strong>. Please use the following One-Time Password (OTP) to complete the verification:</p>
+            
+            <div class="otp-container">
+                {{ otp }}
+            </div>
+            
+            <p>This code is valid for <strong>10 minutes</strong>. Do not share this OTP with anyone, including our support agents.</p>
+            
+            <div class="warning">
+                <strong>If you did not make this request:</strong> Please ignore this email or secure your account password immediately.
+            </div>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 {{ company }}. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

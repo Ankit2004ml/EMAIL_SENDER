@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice {{ invoice_number }} - {{ company }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f6f9fc;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2f5;
+        }
+        .header {
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .header .status {
+            background-color: #10b981;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .content {
+            padding: 40px 30px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .invoice-details {
+            margin-bottom: 30px;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .invoice-table th {
+            text-align: left;
+            padding: 12px;
+            background-color: #f8fafc;
+            border-bottom: 2px solid #e2e8f0;
+            color: #475569;
+            font-weight: 600;
+        }
+        .invoice-table td {
+            padding: 12px;
+            border-bottom: 1px solid #edf2f7;
+            color: #334155;
+        }
+        .total-row td {
+            font-weight: 700;
+            font-size: 18px;
+            border-top: 2px solid #e2e8f0;
+            border-bottom: none;
+            color: #0f172a;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            border-top: 1px solid #eef2f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #1e293b; color: white;">
+            <tr>
+                <td style="padding: 30px;">
+                    <h1 style="margin: 0; font-size: 24px; font-weight: 700;">INVOICE</h1>
+                    <span style="font-size: 13px; color: #94a3b8;">{{ company }}</span>
+                </td>
+                <td style="padding: 30px; text-align: right;">
+                    <span style="background-color: #10b981; color: white; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase;">PAID</span>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="content">
+            <p>Dear {{ name }},</p>
+            <p>Thank you for your business. We have successfully processed your payment. Below is your invoice summary:</p>
+            
+            <div class="invoice-details">
+                <table width="100%" cellpadding="0" cellspacing="0" style="font-size: 14px; margin-bottom: 20px;">
+                    <tr>
+                        <td style="color: #64748b; padding-bottom: 6px;">Invoice Number:</td>
+                        <td style="font-weight: 600; text-align: right; padding-bottom: 6px;">{{ invoice_number }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b; padding-bottom: 6px;">Date:</td>
+                        <td style="font-weight: 600; text-align: right; padding-bottom: 6px;">{{ date }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th style="text-align: right;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Subscription & Service Charges - {{ company }}</td>
+                        <td style="text-align: right;">{{ amount }}</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td>Total Paid</td>
+                        <td style="text-align: right;">{{ amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="margin-top: 30px;">An electronic receipt has been generated. If you require a detailed breakdown or have any questions about this invoice, please reach out to our billing team.</p>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2026 {{ company }}. All rights reserved.</p>
+            <p>If you have any questions, contact us at billing@{{ company }}.example.com</p>
+        </div>
+    </div>
+</body>
+</html>

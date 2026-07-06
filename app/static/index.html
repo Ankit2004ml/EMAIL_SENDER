@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Email Sender Dashboard - Manage SMTP, plain text, and HTML template emails with attachment validation.">
+    <title>Email Sender Service Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon"></div>
+                <h2>Mailflow</h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" id="btn-plain" data-target="section-plain">
+                    <span class="icon">✉</span> Plain Text Email
+                </button>
+                <button class="nav-item" id="btn-html" data-target="section-html">
+                    <span class="icon">🖹</span> HTML Template Email
+                </button>
+                <button class="nav-item" id="btn-attachment" data-target="section-attachment">
+                    <span class="icon">📎</span> With Attachment
+                </button>
+                <button class="nav-item" id="btn-logs" data-target="section-logs">
+                    <span class="icon">📊</span> Delivery History
+                </button>
+                <button class="nav-item" id="btn-bulk" data-target="section-bulk">
+                    <span class="icon">👥</span> Bulk Sender
+                </button>
+                <button class="nav-item" id="btn-builder" data-target="section-builder">
+                    <span class="icon">🛠</span> Template Builder
+                </button>
+            </nav>
+            <div class="provider-badge">
+                <div class="badge-dot"></div>
+                <span>SMTP Provider Active</span>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard View -->
+        <main class="main-content">
+            <!-- Top Dashboard Header with live counter stats -->
+            <header class="content-header">
+                <div>
+                    <h1>Email Console</h1>
+                    <p class="subtitle">Compose and review transactional emails</p>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Sent</span>
+                        <span class="stat-value" id="stat-total">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Success Rate</span>
+                        <span class="stat-value" id="stat-rate">0%</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Notification Alert Banner -->
+            <div id="alert-banner" class="alert hidden">
+                <span class="alert-message"></span>
+                <button class="alert-close" onclick="closeAlert()">×</button>
+            </div>
+
+            <!-- View Sections -->
+            <!-- 1. Plain Text -->
+            <section id="section-plain" class="view-section active">
+                <div class="glass-card">
+                    <h3>Send Plain Text Email</h3>
+                    <form id="form-plain">
+                        <div class="form-group">
+                            <label for="plain-recipient">Recipient Email</label>
+                            <input type="email" id="plain-recipient" placeholder="client@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plain-subject">Subject</label>
+                            <input type="text" id="plain-subject" placeholder="Enter email subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plain-body">Message Body</label>
+                            <textarea id="plain-body" rows="8" placeholder="Type your plain text message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" id="submit-plain">
+                            <span class="btn-text">Send Email</span>
+                            <div class="spinner hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 2. HTML Templates -->
+            <section id="section-html" class="view-section">
+                <div class="glass-card">
+                    <h3>Send HTML Templated Email</h3>
+                    <form id="form-html">
+                        <div class="form-group">
+                            <label for="html-recipient">Recipient Email</label>
+                            <input type="email" id="html-recipient" placeholder="client@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="html-subject">Subject</label>
+                            <input type="text" id="html-subject" placeholder="Enter email subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="html-template">Select HTML Template</label>
+                            <select id="html-template" required>
+                                <option value="" disabled selected>Choose a template...</option>
+                                <option value="welcome.html">Welcome Onboarding</option>
+                                <option value="otp.html">One-Time Password (OTP)</option>
+                                <option value="invoice.html">Billing Invoice</option>
+                                <option value="password_reset.html">Password Reset Request</option>
+                                <option value="internship_certificate.html">Internship Completion Certificate</option>
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Variable Inputs Section -->
+                        <div id="template-variables-container" class="variables-box hidden">
+                            <h4 class="variables-title">Template Parameters</h4>
+                            <div id="dynamic-fields-grid" class="fields-grid"></div>
+                        </div>
+
+                        <!-- Optional Attachment -->
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label>Optional Attachment</label>
+                            <div id="html-dropzone" class="dropzone">
+                                <input type="file" id="html-attach-file" class="file-input">
+                                <div class="dropzone-text">
+                                    <span class="dropzone-icon">📁</span>
+                                    <p>Drag and drop a file here, or <span class="browse-link">browse</span> to attach (optional)</p>
+                                    <span class="file-hint">Supported: PDF, DOCX, TXT, PNG, JPG, ZIP (Max 5MB)</span>
+                                </div>
+                                <div id="html-file-info" class="file-info hidden">
+                                    <span id="html-file-name-text"></span>
+                                    <button type="button" class="remove-file-btn" id="html-remove-file-btn">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submit-html">
+                            <span class="btn-text">Send Templated Email</span>
+                            <div class="spinner hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 3. Attachment Upload -->
+            <section id="section-attachment" class="view-section">
+                <div class="glass-card">
+                    <h3>Send Email with Attachment</h3>
+                    <form id="form-attachment" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="attach-recipient">Recipient Email</label>
+                            <input type="email" id="attach-recipient" placeholder="client@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attach-subject">Subject</label>
+                            <input type="text" id="attach-subject" placeholder="Enter email subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="attach-body">Body Message</label>
+                            <textarea id="attach-body" rows="4" placeholder="Brief explanation of attachment..." required></textarea>
+                        </div>
+                        
+                        <!-- Drag and Drop zone -->
+                        <div class="form-group">
+                            <label>File Attachment</label>
+                            <div id="dropzone" class="dropzone">
+                                <input type="file" id="attach-file" class="file-input" required>
+                                <div class="dropzone-text">
+                                    <span class="dropzone-icon">📁</span>
+                                    <p>Drag and drop your file here, or <span class="browse-link">browse</span></p>
+                                    <span class="file-hint">Supported: PDF, DOCX, TXT, PNG, JPG, ZIP (Max 5MB)</span>
+                                </div>
+                                <div id="file-info" class="file-info hidden">
+                                    <span id="file-name-text"></span>
+                                    <button type="button" class="remove-file-btn" id="remove-file-btn">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submit-attachment">
+                            <span class="btn-text">Send Attachment</span>
+                            <div class="spinner hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 5. Template Builder -->
+            <section id="section-builder" class="view-section">
+                <div class="glass-card">
+                    <h3>HTML Template Builder</h3>
+                    <form id="form-builder">
+                        <div class="form-group">
+                            <label for="builder-name">Template Filename</label>
+                            <input type="text" id="builder-name" placeholder="newsletter.html" required>
+                            <span class="file-hint">Must end with .html</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="builder-scope">Template Scope (Folder)</label>
+                            <select id="builder-scope" required>
+                                <option value="single" selected>Single Send Template (app/templates/)</option>
+                                <option value="bulk">Bulk Send Template (app/bulk_templates/)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="builder-content">HTML Template Content</label>
+                            <textarea id="builder-content" rows="16" placeholder="<!DOCTYPE html>
+<html>
+<head>
+    <style>body { font-family: sans-serif; }</style>
+</head>
+<body>
+    <h1>Hello {{ name }}</h1>
+    <p>Welcome to our newsletter!</p>
+</body>
+</html>" required style="font-family: monospace; font-size: 14px; background: #0b0c10; color: #a9b7c6;"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" id="submit-builder">
+                            <span class="btn-text">Save Template</span>
+                            <div class="spinner hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 6. Bulk Sender -->
+            <section id="section-bulk" class="view-section">
+                <div class="glass-card">
+                    <h3>Bulk Email Sender Console</h3>
+                    <form id="form-bulk">
+                        <!-- Recipients Source -->
+                        <div class="form-group">
+                            <label for="bulk-recipients">Recipients List (Comma-separated)</label>
+                            <textarea id="bulk-recipients" rows="3" placeholder="user1@example.com, user2@example.com, user3@example.com"></textarea>
+                        </div>
+                        
+                        <!-- Upload Recipients File -->
+                        <div class="form-group">
+                            <label>Or Upload Recipients File (.txt / .csv)</label>
+                            <div id="bulk-recipients-dropzone" class="dropzone" style="padding: 16px;">
+                                <input type="file" id="bulk-recipients-file" class="file-input" accept=".txt,.csv">
+                                <div class="dropzone-text">
+                                    <span class="dropzone-icon" style="font-size: 20px; margin-bottom: 2px;">📄</span>
+                                    <p style="font-size: 13px;">Drag & drop recipients file, or <span class="browse-link">browse</span></p>
+                                    <span class="file-hint" style="font-size: 11px; margin-top: 2px;">One email per line or separated by commas</span>
+                                </div>
+                                <div id="bulk-recipients-file-info" class="file-info hidden" style="padding: 6px 12px; margin-top: 2px;">
+                                    <span id="bulk-recipients-file-name-text" style="font-size: 13px;"></span>
+                                    <button type="button" class="remove-file-btn" id="bulk-recipients-remove-file-btn" style="font-size: 12px;">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bulk-subject">Subject</label>
+                            <input type="text" id="bulk-subject" placeholder="Enter email subject" required>
+                        </div>
+
+                        <!-- Template Selection -->
+                        <div class="form-group">
+                            <label for="bulk-template">HTML Template (Optional)</label>
+                            <select id="bulk-template">
+                                <option value="" selected>None - Send plain text body</option>
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Variable Inputs Section -->
+                        <div id="bulk-variables-container" class="variables-box hidden">
+                            <h4 class="variables-title">Template Parameters</h4>
+                            <div id="bulk-dynamic-fields-grid" class="fields-grid"></div>
+                        </div>
+
+                        <!-- Plain text body if no template selected -->
+                        <div class="form-group" id="group-bulk-body">
+                            <label for="bulk-body">Plain Text Message Body</label>
+                            <textarea id="bulk-body" rows="6" placeholder="Type your plain text message body here..."></textarea>
+                        </div>
+
+                        <!-- Optional file attachment for the bulk emails -->
+                        <div class="form-group">
+                            <label>File Attachment (Optional)</label>
+                            <div id="bulk-attach-dropzone" class="dropzone" style="padding: 20px;">
+                                <input type="file" id="bulk-attach-file" class="file-input">
+                                <div class="dropzone-text">
+                                    <span class="dropzone-icon" style="font-size: 24px; margin-bottom: 4px;">📁</span>
+                                    <p>Drag and drop a file to attach to all emails, or <span class="browse-link">browse</span></p>
+                                    <span class="file-hint">Supported: PDF, DOCX, TXT, PNG, JPG, ZIP (Max 5MB)</span>
+                                </div>
+                                <div id="bulk-attach-file-info" class="file-info hidden">
+                                    <span id="bulk-attach-file-name-text"></span>
+                                    <button type="button" class="remove-file-btn" id="bulk-attach-remove-file-btn">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submit-bulk">
+                            <span class="btn-text">Send Bulk Emails</span>
+                            <div class="spinner hidden"></div>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 4. Log Viewer -->
+            <section id="section-logs" class="view-section">
+                <div class="glass-card log-card">
+                    <div class="log-header">
+                        <h3>Delivery History Log</h3>
+                        <button class="btn-secondary" id="btn-refresh-logs">🔄 Refresh logs</button>
+                    </div>
+                    <div class="logs-table-wrapper">
+                        <table class="logs-table">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Timestamp</th>
+                                    <th>Recipient</th>
+                                    <th>Subject / Details</th>
+                                    <th>Provider</th>
+                                    <th>Speed</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logs-tbody">
+                                <tr>
+                                    <td colspan="6" class="no-logs">Loading delivery logs...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Email Details Modal -->
+    <div id="detail-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Email Transmission Details</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div class="detail-group">
+                        <span class="detail-label">Status</span>
+                        <div><span id="detail-status" class="status-badge"></span></div>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Timestamp</span>
+                        <span id="detail-timestamp" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Recipient</span>
+                        <span id="detail-recipient" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Subject</span>
+                        <span id="detail-subject" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Provider</span>
+                        <span id="detail-provider" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group">
+                        <span class="detail-label">Response Time</span>
+                        <span id="detail-time" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group col-span-2 hidden" id="group-template">
+                        <span class="detail-label">Template Details</span>
+                        <span id="detail-template" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group col-span-2 hidden" id="group-attachment">
+                        <span class="detail-label">Attachment Filename</span>
+                        <span id="detail-attachment" class="detail-val"></span>
+                    </div>
+                    <div class="detail-group col-span-2 error-box hidden" id="group-error">
+                        <span class="detail-label">Error Details</span>
+                        <span id="detail-error" class="detail-val error-text"></span>
+                    </div>
+                </div>
+                
+                <div class="preview-section">
+                    <span class="detail-label">Email Body Content Preview</span>
+                    <div class="iframe-container">
+                        <iframe id="detail-preview" srcdoc="No content preview available."></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

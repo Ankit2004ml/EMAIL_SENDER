@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Internship Completion</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 8px double #d4af37; /* Gold border */
+        }
+        .certificate-body {
+            padding: 50px 40px;
+            text-align: center;
+            background-image: radial-gradient(circle, #fffaf0 0%, #ffffff 100%);
+        }
+        .logo-placeholder {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .title {
+            font-size: 32px;
+            color: #1e3a8a;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            font-size: 18px;
+            font-style: italic;
+            color: #b45309;
+            margin-bottom: 30px;
+        }
+        .award-to {
+            font-size: 16px;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+        .recipient-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #111827;
+            text-decoration: underline;
+            margin-bottom: 20px;
+        }
+        .description {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+        }
+        .details-table {
+            width: 100%;
+            margin-top: 40px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+        }
+        .signature-line {
+            border-top: 1px solid #9ca3af;
+            width: 150px;
+            margin: 10px auto 0 auto;
+        }
+        .footer {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="certificate-body">
+            <div class="logo-placeholder">{{ company | upper if company else "CORP" }} ACADEMY</div>
+            <div class="title">Certificate of Completion</div>
+            <div class="subtitle">This is proudly presented to</div>
+            
+            <div class="award-to">Awarded to:</div>
+            <div class="recipient-name">{{ name }}</div>
+            
+            <div class="description">
+                for successfully completing the <strong>{{ internship_title }}</strong> program at <strong>{{ company }}</strong>. The program spanned professional hands-on execution and demonstration of competency in modern technical engineering paradigms.
+            </div>
+            
+            <table class="details-table" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td width="50%" style="text-align: center; font-size: 14px; color: #4b5563;">
+                        <strong>Date of Issue:</strong><br>
+                        {{ date }}
+                    </td>
+                    <td width="50%" style="text-align: center; font-size: 14px; color: #4b5563;">
+                        <span style="font-family: 'Brush Script MT', cursive, sans-serif; font-size: 20px; color: #1e3a8a;">Program Director</span>
+                        <div class="signature-line"></div>
+                        <strong>Authorized Signature</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
+            Verification ID: CERT-{{ name | replace(" ", "-") | upper if name else "UNKNOWN" }}-2026
+        </div>
+    </div>
+</body>
+</html>

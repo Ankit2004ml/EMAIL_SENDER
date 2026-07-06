@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to {{ company }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f6f9fc;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2f5;
+        }
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .content {
+            padding: 40px 30px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .content h2 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-top: 0;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4f46e5;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 24px 0;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #4338ca;
+        }
+        .footer {
+            background-color: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            border-top: 1px solid #eef2f5;
+        }
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to {{ company }}!</h1>
+        </div>
+        <div class="content">
+            <h2>Hello {{ name }},</h2>
+            <p>We are thrilled to welcome you to our community. You are now part of a network of professionals striving to innovate and push the boundaries of technology.</p>
+            <p>Get started by exploring your new dashboard and setting up your profile settings to tailor the experience to your preferences.</p>
+            <p style="text-align: center;">
+                <a href="https://{{ company }}.example.com/dashboard" class="btn">Explore Dashboard</a>
+            </p>
+            <p>If you have any questions or need support, our support team is available 24/7. Just reply to this email or visit our Help Center.</p>
+            <p>Warm regards,<br><strong>The {{ company }} Team</strong></p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 {{ company }}. All rights reserved.</p>
+            <p>You received this email because you registered on our platform. <a href="#">Unsubscribe</a></p>
+        </div>
+    </div>
+</body>
+</html>
